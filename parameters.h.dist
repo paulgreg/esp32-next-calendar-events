@@ -1,0 +1,7 @@
+#define WIFI_SSID  "SSID"
+#define WIFI_PASSWORD "PASSWORD"
+
+#define URL_EVENTS "https://example.com/events.json"
+#define LOGIN "login"
+#define PASSWORD "password"
+
