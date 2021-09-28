@@ -13,7 +13,6 @@ boolean fillDataFromJson(JSONVar json, Events* events) {
     sprintf(events->date[i], "%s", (const char*) json[i]["dateStart"]);
     sprintf(events->calendar[i], "%s", (const char*) json[i]["calendar"]);
     sprintf(events->summary[i], "%s", (const char*) json[i]["summary"]);
-    events->summary[i][24] = '\0'; // force text truncation
     events->size = i + 1;
   }
   return true;

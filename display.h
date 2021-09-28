@@ -57,7 +57,21 @@ void drawDateAndCalendar(int x, int y, char* fulldate, char* cal) {
 void drawSummary(int x, int y, char* text) {
   char summary[256];
   sprintf(summary, "%s", text);
-  drawText(x, y, summary, GxEPD_RED);
+
+  display.setFont(&FONT_BIG);
+  display.setTextColor(GxEPD_RED);
+  display.setCursor(x, y);
+
+  // truncate text if too long to fit in one line
+  int16_t tbx, tby; 
+  uint16_t tbw, tbh;
+  display.getTextBounds(summary, x, y, &tbx, &tby, &tbw, &tbh);
+  while (strlen(summary) > 5 && (tbw + 10) > display.width()) {
+    summary[strlen(summary) - 1] = '\0';
+    display.getTextBounds(summary, x, y, &tbx, &tby, &tbw, &tbh);
+  }
+
+  display.print(summary);
 }
 
 void displayEvents(Events* events) {
@@ -66,13 +80,11 @@ void displayEvents(Events* events) {
   do {
     int x = 4;
     int y = 20;
-    drawBigText(x, y, "Agenda", GxEPD_BLACK);
-    y += 20;
     for (int i = 0; i < events->size; i++) {
       drawDateAndCalendar(x, y, events->date[i], events->calendar[i]);
-      y += 17;
+      y += 20;
       drawSummary(x, y, events->summary[i]);
-      y += 19;
+      y += 22;
     }
   } while (display.nextPage());
 }
