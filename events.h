@@ -2,6 +2,7 @@
 
 struct Events {
   unsigned int size;
+  boolean isToday[MAX_EVENTS];
   char date[MAX_EVENTS][25];
   char calendar[MAX_EVENTS][25];
   char summary[MAX_EVENTS][256];
@@ -10,6 +11,7 @@ struct Events {
 boolean fillDataFromJson(JSONVar json, Events* events) {
   int size = json.length();
   for (int i = 0; i < size && i < MAX_EVENTS; i++) {
+    events->isToday[i] = json[i]["isToday"];
     sprintf(events->date[i], "%s", (const char*) json[i]["dateStart"]);
     sprintf(events->calendar[i], "%s", (const char*) json[i]["calendar"]);
     sprintf(events->summary[i], "%s", (const char*) json[i]["summary"]);

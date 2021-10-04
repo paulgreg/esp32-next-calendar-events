@@ -46,20 +46,20 @@ void extractDate (char* str, char* date) { // str is like 2021-09-25T00:00:00
   }
 }
 
-void drawDateAndCalendar(int x, int y, char* fulldate, char* cal) {
+void drawDateAndCalendar(int x, int y, char* fulldate, char* cal, boolean isToday) {
   char calendarAndDate[25];
   char shortdate[14];
   extractDate(fulldate, shortdate);
   sprintf(calendarAndDate, "%s - %s", shortdate, cal);
-  drawText(x, y, calendarAndDate, GxEPD_BLACK);
+  drawText(x, y, calendarAndDate, isToday ? GxEPD_BLACK : GxEPD_RED);
 }
 
-void drawSummary(int x, int y, char* text) {
+void drawSummary(int x, int y, char* text, boolean isToday) {
   char summary[256];
   sprintf(summary, "%s", text);
 
   display.setFont(&FONT_BIG);
-  display.setTextColor(GxEPD_RED);
+  display.setTextColor(isToday ? GxEPD_BLACK : GxEPD_RED);
   display.setCursor(x, y);
 
   // truncate text if too long to fit in one line
@@ -81,9 +81,9 @@ void displayEvents(Events* events) {
     int x = 4;
     int y = 20;
     for (int i = 0; i < events->size; i++) {
-      drawDateAndCalendar(x, y, events->date[i], events->calendar[i]);
+      drawDateAndCalendar(x, y, events->date[i], events->calendar[i], events->isToday[i]);
       y += 20;
-      drawSummary(x, y, events->summary[i]);
+      drawSummary(x, y, events->summary[i], events->isToday[i]);
       y += 22;
     }
   } while (display.nextPage());
