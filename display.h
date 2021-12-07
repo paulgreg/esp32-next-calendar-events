@@ -66,7 +66,7 @@ void drawSummary(int x, int y, char* text, boolean isToday) {
   int16_t tbx, tby; 
   uint16_t tbw, tbh;
   display.getTextBounds(summary, x, y, &tbx, &tby, &tbw, &tbh);
-  while (strlen(summary) > 5 && (tbw + 10) > display.width()) {
+  while (strlen(summary) > 10 && (tbw + 15) >= display.width()) {
     summary[strlen(summary) - 1] = '\0';
     display.getTextBounds(summary, x, y, &tbx, &tby, &tbw, &tbh);
   }
