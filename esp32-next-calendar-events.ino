@@ -68,7 +68,7 @@ void loop() {
   }
 
   Serial.println("Sleeping");
-  uint64_t sleepTime = HOUR * 6;
+  uint64_t sleepTime = HOUR * 3;
   sleep(sleepTime);
 
   Serial.println("After sleep, that line should never be printed");
