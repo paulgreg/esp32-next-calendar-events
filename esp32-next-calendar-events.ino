@@ -36,11 +36,13 @@ void setup() {
 
 JSONVar jsonEvents;
 Events events;
+uint64_t sleepTime = HOUR * 2;
 
 void loop() {
   Serial.println("next-calendar");
   if (!connectToWifi()) {
     displayError("error:WIFI");
+    sleepTime = HOUR;
   } else {
     unsigned int retries = 5;
     boolean success = false;
@@ -68,7 +70,6 @@ void loop() {
   }
 
   Serial.println("Sleeping");
-  uint64_t sleepTime = HOUR * 3;
   sleep(sleepTime);
 
   Serial.println("After sleep, that line should never be printed");
